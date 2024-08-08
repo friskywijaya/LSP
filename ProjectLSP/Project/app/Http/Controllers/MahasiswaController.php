@@ -46,6 +46,10 @@ class MahasiswaController extends Controller
     public function create() {
         return view('Daftar');
     }
+
+    public function create2() {
+        return view('BuatAkun');
+    }
     // public function storemhs(Request $request){
     //     Mahasiswa::create($request->except(['_token']));
 
@@ -69,26 +73,34 @@ class MahasiswaController extends Controller
 
     //     return redirect('/');
     // }
+
+    public function storeakun(Request $request){
+        $user = new User();
+        $user->name = $request->input('nama');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));  
+        $user->role = 'Mahasiswa';
+        $user->statusAkun = 'diproses';
+        $user->save();
+
+        return redirect('/');
+    }
+ 
     public function storemhs(Request $request){
             // Membuat user baru
-            $user = new User();
-            $user->name = $request->input('nama');
-            $user->email = $request->input('email');
-            $user->password = Hash::make($request->input('password'));  
-            $user->role = 'Mahasiswa';
-            $user->save();
-        
             // Membuat mahasiswa baru
             $mhs = new Mahasiswa();
+            $mhs->id_user = Auth::user()->id;
             $mhs->nama = $request->input('nama');
             $mhs->jeniskel = $request->input('jeniskel');
             $mhs->tempatlahir = $request->input('tempatlahir');
             $mhs->tanggallahir = $request->input('tanggallahir');
             $mhs->alamat = $request->input('alamat');
-          
-            $mhs->id_user = $user->id; // Memastikan ini adalah id_user yang benar
-            $mhs->statusAkun = 'diproses';
+           
             $mhs->statusMahasiswa = 'diproses';
+            $mhs->noktp = $request->input('noktp');
+            $mhs->prodi = $request->input('prodi');
+
             $mhs->save();
         
             return redirect('/');
@@ -96,22 +108,22 @@ class MahasiswaController extends Controller
         
     
     public function index2() {
-        $mahasiswa = Mahasiswa::all();
+        $user = User::all();
         
-        return view('akun', compact (['mahasiswa']));
+        return view('akun', compact (['user']));
     }
 
     public function update(Request $request, $id)
     {
-        $mahasiswa = Mahasiswa::findOrFail($id);
+        $user = User::findOrFail($id);
 
         // Validasi dan perbarui status
         $request->validate([
             'statusAkun' => 'required|in:diproses,diterima,ditolak',
         ]);
 
-        $mahasiswa->statusAkun = $request->input('statusAkun');
-        $mahasiswa->save();
+        $user->statusAkun = $request->input('statusAkun');
+        $user->save();
 
         return redirect()->back()->with('success', 'Status berhasil diperbarui!');
     }

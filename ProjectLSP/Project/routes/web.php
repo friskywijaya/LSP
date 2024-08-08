@@ -24,11 +24,16 @@ Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('
 Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
 
 Route::get('/profile', [MahasiswaController::class,'index']);
+// Route::get('/buatakun', [MahasiswaController::class,'storemhs']);
 Route::get('/akun', [MahasiswaController::class,'index2']);
 Route::get('/datamhs', [MahasiswaController::class,'index3']);
 Route::get('/pengajuan', [MahasiswaController::class,'index4']);
 Route::get('/daftar', [MahasiswaController::class,'create']);
+Route::get('/buatakun', [MahasiswaController::class,'create2']);
+
 Route::post('/storemhs', [MahasiswaController::class,'storemhs']);
+Route::post('/storeakun', [MahasiswaController::class,'storeakun']);
+
 Route::post('/update-status/{id}', [MahasiswaController::class, 'updateStatus'])->name('updateStatus');
 
 Route::get('/dashboard', [PengumumanController::class,'index']);

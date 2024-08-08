@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Mahasiswa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -26,11 +26,12 @@ class LoginController extends Controller
 
         if (Auth::attempt($data)) {
            $user= Auth::user()->id;
-            $mahasiswa = Mahasiswa::where('id_user',$user)->first();
+        //    $User = $user->first();
+            $user = User::where('id',$user)->first();
             // $mahasiswa = $Mahasiswa->first();
           //  dd($mahasiswa->status);
                     // Cek apakah akun telah diverifikasi
-                    if ($mahasiswa->statusAkun=='diterima') {
+                    if ($user->statusAkun=='diterima') {
                         $request->session()->regenerate();
                         return redirect('/dashboard');
                     } else {

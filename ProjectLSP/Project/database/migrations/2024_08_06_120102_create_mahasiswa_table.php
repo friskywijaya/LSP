@@ -21,8 +21,11 @@ return new class extends Migration
             $table->date('tanggallahir');
             $table->text('alamat');
             $table->unsignedBigInteger('id_user');
-            $table->string('statusAkun')->default('dipros');
+            // $table->string('statusAkun')->default('diproses');
             $table->string('statusMahasiswa')->default('diproses');
+            $table->string('noktp',16);
+            $table->enum('prodi',['IF','SI','MJ']);
+
 
 
             $table->timestamps();

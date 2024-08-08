@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran Mahasiswa Baru</title>
+    <title>Halaman Pengajuan Akun</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -20,8 +20,8 @@
               Menu
             </button>
             <ul class="dropdown-menu">
-                @if (Auth::user()->role == 'Mahasiswa')
                 <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                @if (Auth::user()->role == 'Mahasiswa')
                 <li><a class="dropdown-item" href="/profile">Profile</a></li>
                 @endif
                 @if (Auth::user()->role == 'admin')
@@ -46,17 +46,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($mahasiswa as $index => $mahasiswa)
+                    @foreach ($user as $index => $user)
                     <tr>
                         <td>{{ $index + 1 }}</td> <!-- Menampilkan nomor urut -->
-                        <td>{{ $mahasiswa->nama }}</td>
+                        <td>{{ $user->name }}</td>
                         <td>
-                            <form action="/akun/{{ $mahasiswa->id }}" method="POST">
+                            <form action="/akun/{{ $user->id }}" method="POST">
                                 @csrf
-                                <select name="statusAkun" class="form-select" onchange="this.form.submit()" {{ in_array($mahasiswa->statusAkun, ['diterima', 'ditolak']) ? 'disabled' : '' }}>
-                                    <option value="diproses" {{ $mahasiswa->statusAkun == 'diproses' ? 'selected' : '' }}>Diproses</option>
-                                    <option value="diterima" {{ $mahasiswa->statusAkun == 'diterima' ? 'selected' : '' }}>Diterima</option>
-                                    <option value="ditolak" {{ $mahasiswa->statusAkun == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
+                                <select name="statusAkun" class="form-select" onchange="this.form.submit()" {{ in_array($user->statusAkun, ['diterima', 'ditolak']) ? 'disabled' : '' }}>
+                                    <option value="diproses" {{ $user->statusAkun == 'diproses' ? 'selected' : '' }}>Diproses</option>
+                                    <option value="diterima" {{ $user->statusAkun == 'diterima' ? 'selected' : '' }}>Diterima</option>
+                                    <option value="ditolak" {{ $user->statusAkun == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
                                 </select>
                             </form>
                         </td>

@@ -16,7 +16,7 @@
     <div class="alert alert-danger" role="alert">
       {{ session('loginError') }}
     </div>
-        
+  
     @endif
       <div class="container mt-5">
       <div class="card-body" style="height: 500px">
@@ -45,7 +45,7 @@
               <button type="login" class="btn btn-outline-primary">login</button>
             </div>
             <div class="mt-3 text-center">
-              <small> <a href="/daftar">Buat Akun</a></small>
+              <small> <a href="/buatakun">Buat Akun</a></small>
             </div>
           </form>
         </div>
